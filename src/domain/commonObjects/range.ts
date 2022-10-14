@@ -19,3 +19,5 @@ class Range implements IRange {
         new Range(range)
     }
 }
+
+export default Range
