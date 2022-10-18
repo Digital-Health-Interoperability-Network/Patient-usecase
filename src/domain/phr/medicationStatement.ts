@@ -1,4 +1,7 @@
 import Identifier from "domain/commonObjects/identifier"
+import IPeriod from 'domain/commonObjects/period'
+import Dosage from "domain/commonObjects/dosage"
+import Annotation from "domain/commonObjects/annotation"
 
 enum status {
   active,
@@ -29,6 +32,21 @@ enum category {
   patientSpecified,
 }
 
+enum reasonCode {
+  "Clinical finding (finding)",
+  "Anxiety disorder of childhood OR adolescence",
+  "Choroidal hemorrhage",
+  "Chronic pharyngitis",
+  "Normal peripheral vision",
+  "Injury of intercostal artery",
+  "Sycosis",
+  "EEG finding",
+  "Poisoning by oxytocin",
+  "Boil of penis",
+  "Tic disorder",
+  "Hypertrophy of lip"
+}
+
 export default interface medicationStatement{
     "identifier" : Identifier[],
     status : status
@@ -36,14 +54,11 @@ export default interface medicationStatement{
     category : category,
     // "medicationReference" : { Reference(Medication) },
     // "subject" : { Reference(Group|Patient) }, // R!  Who is/was taking  the medication
-    "effectiveDateTime" : "<dateTime>",
-    "effectivePeriod" : { Period },
-    "dateAsserted" : "<dateTime>", // When the statement was asserted?
-    "informationSource" : { Reference(Organization|Patient|Practitioner|
-     PractitionerRole|RelatedPerson) }, // Person or organization that provided the information about the taking of this medication
-    "derivedFrom" : [{ Reference(Any) }], // Additional supporting information
-    "reasonCode" : [{ CodeableConcept }], // Reason for why the medication is being/was taken
-    "reasonReference" : [{ Reference(Condition|DiagnosticReport|Observation) }], // Condition or observation that supports why the medication is being/was taken
-    "note" : [{ Annotation }], // Further information about the statement
-    "dosage" : [{ Dosage }] // Details of how medication is/was taken or should be taken
+    effectiveDateTime : Date,
+    effectivePeriod :  IPeriod ,
+    dateAsserted : Date, // When the statement was asserted?
+    reasonCode : reasonCode[], // Reason for why the medication is being/was taken
+    // "reasonReference" : [{ Reference(Condition|DiagnosticReport|Observation) }], // Condition or observation that supports why the medication is being/was taken
+    "note" : Annotation[], // Further information about the statement
+    "dosage" : Dosage[] // Details of how medication is/was taken or should be taken
   }

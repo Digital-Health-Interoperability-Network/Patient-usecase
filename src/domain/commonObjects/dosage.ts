@@ -15,8 +15,28 @@ enum doseAndRateType {
   ordered,
 }
 
+enum site {
+  "Kupffer cell",
+  "Right lower lobe of lung",
+  "Lateral myocardium",
+  "Superior labial artery",
+  "Wall of urinary bladder",
+  "Embryonic structure",
+  "Head of phalanx of great toe",
+  "Bronchus"
+}
+
+enum method {
+  "Suck",
+  "Chew", 
+  "Take",
+  "Apply",
+  "Inhale"
+}
+
+
 interface doseAndRate {
-  type: doseAndRateType,
+  type: doseAndRateType, //The kind of dose or rate specified
   doseRange: Range
 }
 
@@ -25,11 +45,7 @@ sequence : number, // The order of the dosage instructions
 text : string, // Free text dosage instructions e.g. SIG
 additionalInstruction : additionalInstruction,
 patientInstruction : string, // Patient or consumer oriented instructions
-site : { CodeableConcept }, // Body site to administer to
-method : { CodeableConcept }, // Technique for administering medication
-doseAndRate : [{ // Amount of medication administered
-  type : { CodeableConcept, // The kind of dose or rate specified
-  doseRange :  Range,
-  rateRange : Range
-}],
+site : site, // Body site to administer to
+method : method, // Technique for administering medication
+doseAndRate : doseAndRate[] // Amount of medication administered
 }

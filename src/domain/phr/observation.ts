@@ -1,74 +1,150 @@
-{
-    "resourceType" : "Observation",
-  // from Resource: id, meta, implicitRules, and language
-  // from DomainResource: text, contained, extension, and modifierExtension
-  "identifier" : [{ Identifier }], // Business Identifier for observation
-  "basedOn" : [{ Reference(CarePlan|DeviceRequest|ImmunizationRecommendation|
-   MedicationRequest|NutritionOrder|ServiceRequest) }], // Fulfills plan, proposal or order
-  "partOf" : [{ Reference(ImagingStudy|Immunization|MedicationAdministration|
-   MedicationDispense|MedicationStatement|Procedure) }], // Part of referenced event
-  "status" : "<code>", // R!  registered | preliminary | final | amended +
-  "category" : [{ CodeableConcept }], // Classification of  type of observation
-  "code" : { CodeableConcept }, // R!  Type of observation (code / type)
-  "subject" : { Reference(Device|Group|Location|Medication|Organization|
-   Patient|Practitioner|Procedure|Substance) }, // Who and/or what the observation is about
-  "focus" : [{ Reference(Any) }], // What the observation is about, when it is not about the subject of record
-  "encounter" : { Reference(Encounter) }, // Healthcare event during which this observation is made
+import Identifier from "domain/commonObjects/identifier"
+import Annotation from "domain/commonObjects/annotation"
+import IPeriod from 'domain/commonObjects/period'
+
+enum status {
+  "Registered",
+  "Preliminary",
+  "Final",
+  "Amended",
+  "Corrected",
+  "Cancelled",
+  "Entered in Error",
+  "Unknown"
+}
+
+enum category {
+  "Social History",
+  "Vital Signs",
+  "Imaging",
+  "Laboratory", 
+  "Procedure",
+  "Survey",
+  "Exam",
+  "Therapy",
+  "Activity",
+}
+
+enum code {
+  "Acyclovir [Susceptibility]",
+  "Amdinocillin [Susceptibility] by Serum bactericidal titer",
+  "Cefoperazone [Susceptibility] by Minimum inhibitory concentration (MIC)",
+  "No injury related to procedure equipment, medical supplies, or instrumentation",
+  "SETBP1 gene mutations found [Identifier] in Blood or Tissue by Molecular genetics method Nominal",
+  "Axis II: Spatial aspects score [Mainz Pain Staging System]",
+  "Atovaquone [Susceptibility]",
+  "Fluoroquinolone [Susceptibility]",
+  "Eye Image magnification",
+  "Right cornea Type of Analysis method by Specular microscopy",
+  "Filaria IgG and IgM panel - Serum",
+  "R' wave amplitude in lead AVR",
+  "Campylobacter sp Ab panel - Serum",
+  "DBG Ab [Presence] in Serum or Plasma",
+  "SARS-CoV-2 (COVID-19) lineage [Type] in Specimen by Sequencing",
+  "6(R+S)-oxo-propylpiperidine-2-carboxylate [Moles/volume] in Plasma",
+  "R' wave duration in lead AVR",
+}
+
+enum interpretation {
+  "GeneticObservationInterpretation",
+  "Carrier",
+  "ObservationInterpretationChange",
+  "Better",
+  "Significant change down",
+  "Significant change up",
+  "Worse",
+  "ObservationInterpretationExceptions",
+  "Off scale low",
+  "Off scale high",
+  "Insufficient evidence",
+  "ObservationInterpretationNormality",
+  "Abnormal",
+  "Critical abnormal",
+  "Critical high",
+  "Critical low",
+  "	High",
+  "Significantly high",
+  "Low",
+  "Significantly low",
+  "Normal",
+  "ObservationInterpretationSusceptibility",
+  "Intermediate",
+  "No CLSI defined breakpoint",
+  "Non-susceptible",
+  "Resistant",
+  "Synergy - resistant",
+  "Susceptible",
+  "Susceptible-dose dependent",
+  "Synergy - susceptible",
+  "outside threshold",
+  "above high threshold",
+  "below low threshold",
+  "ObservationInterpretationDetection",
+  "Indeterminate",
+  "Equivocal",
+  "Negative",
+  "Not detected",
+  "Positive",
+  "Detected",
+  "ObservationInterpretationExpectation",
+  "Expected",
+  "Unexpected",
+  "ReactivityObservationInterpretation",
+  "Non-reactive",
+  "Reactive",
+  "Weakly reactive"
+}
+
+enum bodySite {
+  "Posterior carpal region",
+  "Fetal part of placenta",
+  "Entire condylar emissary vein",
+  "Visceral layer of Bowman's capsule",
+  "Parathyroid gland",
+  "Subcutaneous tissue of medial surface of index finger",
+  "Gluteus maximus muscle",
+  "Central axillary lymph node",
+  "Anastomosis, heterocladic",
+  "Inferior surface of tongue",
+  "Palpebral fissure",
+  "Body of ischium",
+  "Ovarian vein",
+  "Odontoid process of axis",
+  "Gastric serosa",
+  "Ligamentum teres of liver"
+}
+
+enum method {
+  "Technique",
+  "Competitive protein binding assay",
+  "Total measurement",
+  "Bladder filling technique",
+  "Provocation technique",
+  "Acidometric method",
+  "Enzyme method"
+}
+
+enum componentCode {
+  "Specimen care is maintained",
+  "No injury related to procedure equipment, medical supplies, or instrumentation",
+  "Demonstrates knowledge of the expected psychosocial responses to the procedure",
+  ""
+}
+
+export default interface Observation {
+  identifier : Identifier[], // Business Identifier for observation
+  // "partOf" : [{ Reference(MedicationStatement) }], // Part of referenced event
+  status : status, // R!  registered | preliminary | final | amended +
+  category : category, // Classification of  type of observation
+  code : code, // R!  Type of observation (code / type)
+  // "subject" : { Reference(Patient) }, // Who and/or what the observation is about
+  // encounter : { Reference(Encounter) }, // Healthcare event during which this observation is made
   // effective[x]: Clinically relevant time/time-period for observation. One of these 4:
-  "effectiveDateTime" : "<dateTime>",
-  "effectivePeriod" : { Period },
-  "effectiveTiming" : { Timing },
-  "effectiveInstant" : "<instant>",
-  "issued" : "<instant>", // Date/Time this version was made available
-  "performer" : [{ Reference(CareTeam|Organization|Patient|Practitioner|
-   PractitionerRole|RelatedPerson) }], // Who is responsible for the observation
+  effectivePeriod : IPeriod,
+  // "performer" : [{ Reference(Practitioner)}], // Who is responsible for the observation
   // value[x]: Actual result. One of these 11:
-  "valueQuantity" : { Quantity },
-  "valueCodeableConcept" : { CodeableConcept },
-  "valueString" : "<string>",
-  "valueBoolean" : <boolean>,
-  "valueInteger" : <integer>,
-  "valueRange" : { Range },
-  "valueRatio" : { Ratio },
-  "valueSampledData" : { SampledData },
-  "valueTime" : "<time>",
-  "valueDateTime" : "<dateTime>",
-  "valuePeriod" : { Period },
-  "dataAbsentReason" : { CodeableConcept }, // C? Why the result is missing
-  "interpretation" : [{ CodeableConcept }], // High, low, normal, etc.
-  "note" : [{ Annotation }], // Comments about the observation
-  "bodySite" : { CodeableConcept }, // Observed body part
-  "method" : { CodeableConcept }, // How it was done
-  "specimen" : { Reference(Specimen) }, // Specimen used for this observation
-  "device" : { Reference(Device|DeviceMetric) }, // (Measurement) Device
-  "referenceRange" : [{ // Provides guide for interpretation
-    "low" : { Quantity(SimpleQuantity) }, // C? Low Range, if relevant
-    "high" : { Quantity(SimpleQuantity) }, // C? High Range, if relevant
-    "type" : { CodeableConcept }, // Reference range qualifier
-    "appliesTo" : [{ CodeableConcept }], // Reference range population
-    "age" : { Range }, // Applicable age range, if relevant
-    "text" : "<string>" // Text based reference range in an observation
-  }],
-  "hasMember" : [{ Reference(MolecularSequence|Observation|
-   QuestionnaireResponse) }], // Related resource that belongs to the Observation group
-  "derivedFrom" : [{ Reference(DocumentReference|ImagingStudy|Media|
-   MolecularSequence|Observation|QuestionnaireResponse) }], // Related measurements the observation is made from
-  "component" : [{ // Component results
-    "code" : { CodeableConcept }, // R!  Type of component observation (code / type)
-    // value[x]: Actual component result. One of these 11:
-    "valueQuantity" : { Quantity },
-    "valueCodeableConcept" : { CodeableConcept },
-    "valueString" : "<string>",
-    "valueBoolean" : <boolean>,
-    "valueInteger" : <integer>,
-    "valueRange" : { Range },
-    "valueRatio" : { Ratio },
-    "valueSampledData" : { SampledData },
-    "valueTime" : "<time>",
-    "valueDateTime" : "<dateTime>",
-    "valuePeriod" : { Period },
-    "dataAbsentReason" : { CodeableConcept }, // C? Why the component result is missing
-    "interpretation" : [{ CodeableConcept }], // High, low, normal, etc.
-    "referenceRange" : [{ Content as for Observation.referenceRange }] // Provides guide for interpretation of component result
-  }]
+  valueBoolean : boolean,
+  interpretation : interpretation, // High, low, normal, etc.
+  note : Annotation[], // Comments about the observation
+  bodySite : bodySite, // Observed body part
 }

@@ -19,3 +19,6 @@ class Period implements IPeriod {
         new Period(period)
     }
 }
+
+
+export default IPeriod
