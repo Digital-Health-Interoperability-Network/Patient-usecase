@@ -1,4 +1,4 @@
-import Identifier from "domain/commonObjects/identifier"
+import Identifier from "domain/interfaces/identifier"
 import Annotation from "domain/commonObjects/annotation"
 import IPeriod from "domain/commonObjects/period"
 
@@ -278,28 +278,19 @@ enum usedCode {
 
 export default interface Procedure {
   identifier :Identifier[], // External Identifiers for this procedure
-  "status" : "<code>", // R!  preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-  "statusReason" : statusReason, // Reason for current status
-  "category" : category, // Classification of the procedure
-  "code" : code, // Identification of the procedure
-  // "subject" : { Reference(Group|Patient) }, // R!  Who the procedure was performed on
-  // "encounter" : { Reference(Encounter) }, // Encounter created as part of
-  // performed[x]: When the procedure was performed. One of these 5:
-  "performedPeriod" :  IPeriod,
-  // "recorder" : { Reference(Patient|Practitioner|PractitionerRole|
-  //  RelatedPerson) }, // Who recorded the procedure
-  "performer" : [{ // The people who performed the procedure
-    "function" : performerFunction, // Type of performance
+  status : "<code>", // R!  preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  statusReason : statusReason, // Reason for current status
+  category : category, // Classification of the procedure
+  code : code, // Identification of the procedure
+  performedPeriod :  IPeriod,
+  performer : [{ // The people who performed the procedure
+    function : performerFunction, // Type of performance
     // "actor" : { Reference(Device|Organization|Patient|Practitioner|
     // PractitionerRole|RelatedPerson) }, // R!  The reference to the practitioner
     // "onBehalfOf" : { Reference(Organization) } // Organization the device or practitioner was acting for
   }],
-  // "location" : { Reference(Location) }, // Where the procedure happened
-  // "reasonCode" : reasonCode, // Coded reason procedure performed (already defined in med statement)
-  // "bodySite" : [{ CodeableConcept }], // Target body sites (already defined in onservation)
-  "outcome" : outcome, // The result of procedure
-  "followUp" : followUp, // Instructions for follow up
-  "note" : Annotation[], // Additional information about the procedure
-  // "usedReference" : [{ Reference(Device|Medication|Substance) }], // Items used during procedure
-  "usedCode" : usedCode[] // Coded items used during the procedure
+  outcome : outcome, // The result of procedure
+  followUp : followUp, // Instructions for follow up
+  note : Annotation[], // Additional information about the procedure
+  usedCode : usedCode[] // Coded items used during the procedure
 }

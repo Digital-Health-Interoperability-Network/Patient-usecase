@@ -5,5 +5,5 @@ export default interface Identifier {
     value: string,
     assigner: string,
     partOf: string,
-    period: Period,
+    // period: Period,
 }

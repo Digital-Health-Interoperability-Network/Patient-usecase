@@ -1,5 +1,5 @@
- import Identifier from "domain/commonObjects/identifier"
- import Annotation from "domain/commonObjects/annotation"
+ import Identifier from "domain/interfaces/identifier"
+ import Annotation from "domain/interfaces/annotation"
  import Range from "domain/commonObjects/range"
 
  type Age = string
@@ -32,7 +32,7 @@
   "Deferred"
  }
 
- export default interface familyMemberHistory{
+ export default interface FamilyMemberHistory{
     "identifier" : Identifier[],
     status : status
     "dataAbsentReason" : dataAbsentReason, // subject-unknown | withheld | unable-to-obtain | deferred

@@ -1,7 +1,7 @@
-import Identifier from "domain/commonObjects/identifier"
+import Identifier from "domain/interfaces/identifier"
 import IPeriod from 'domain/commonObjects/period'
-import Dosage from "domain/commonObjects/dosage"
-import Annotation from "domain/commonObjects/annotation"
+import Dosage from "domain/interfaces/dosage"
+import Annotation from "domain/interfaces/annotation"
 
 enum status {
   active,
@@ -47,7 +47,7 @@ enum reasonCode {
   "Hypertrophy of lip"
 }
 
-export default interface medicationStatement{
+export default interface MedicationStatement{
     "identifier" : Identifier[],
     status : status
     statusReason : statusReason[],

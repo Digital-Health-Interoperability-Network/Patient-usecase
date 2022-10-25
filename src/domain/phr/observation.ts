@@ -1,5 +1,5 @@
-import Identifier from "domain/commonObjects/identifier"
-import Annotation from "domain/commonObjects/annotation"
+import Identifier from "domain/interfaces/identifier"
+import Annotation from "domain/interfaces/annotation"
 import IPeriod from 'domain/commonObjects/period'
 
 enum status {
@@ -133,16 +133,12 @@ enum componentCode {
 
 export default interface Observation {
   identifier : Identifier[], // Business Identifier for observation
-  // "partOf" : [{ Reference(MedicationStatement) }], // Part of referenced event
   status : status, // R!  registered | preliminary | final | amended +
   category : category, // Classification of  type of observation
   code : code, // R!  Type of observation (code / type)
   // "subject" : { Reference(Patient) }, // Who and/or what the observation is about
-  // encounter : { Reference(Encounter) }, // Healthcare event during which this observation is made
-  // effective[x]: Clinically relevant time/time-period for observation. One of these 4:
   effectivePeriod : IPeriod,
   // "performer" : [{ Reference(Practitioner)}], // Who is responsible for the observation
-  // value[x]: Actual result. One of these 11:
   valueBoolean : boolean,
   interpretation : interpretation, // High, low, normal, etc.
   note : Annotation[], // Comments about the observation

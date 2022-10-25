@@ -1,4 +1,4 @@
-import Identifier from "domain/commonObjects/identifier"
+import Identifier from "domain/interfaces/identifier"
 
 enum status {
   'active' = "active",
